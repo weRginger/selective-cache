@@ -6,7 +6,10 @@
 
 static int __init mymodule_init(void)
 {
- printk ("My module worked!\n");
+  extern int my_variable;
+  printk ("my_variable is %d\n", my_variable);
+  my_variable++;
+  printk ("My module worked!\n");
         return 0;
 }
 

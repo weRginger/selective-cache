@@ -44,6 +44,9 @@
 
 #include <asm/uaccess.h>
 
+int my_variable = 0;
+EXPORT_SYMBOL(my_variable);
+
 /*
  * Architectures can override it:
  */
