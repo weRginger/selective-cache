@@ -434,8 +434,16 @@ void activate_page(struct page *page)
  * inactive,referenced		->	active,unreferenced
  * active,unreferenced		->	active,referenced
  */
+
+extern int my_variable;
+
 void mark_page_accessed(struct page *page)
 {
+	if (my_variable < 10) {
+		printk ("page accessed number is %d\n", my_variable);
+		my_variable++;		
+	}
+
 	if (!PageActive(page) && !PageUnevictable(page) &&
 			PageReferenced(page) && PageLRU(page)) {
 		activate_page(page);
