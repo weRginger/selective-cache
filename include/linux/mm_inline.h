@@ -36,6 +36,8 @@ add_page_to_lru_list(struct zone *zone, struct page *page, enum lru_list l)
 	__add_page_to_lru_list(zone, page, l, &zone->lru[l].list);
 }
 
+extern int my_variable;
+
 static inline void
 del_page_from_lru_list(struct zone *zone, struct page *page, enum lru_list l)
 {
