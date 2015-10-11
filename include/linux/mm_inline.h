@@ -36,17 +36,9 @@ add_page_to_lru_list(struct zone *zone, struct page *page, enum lru_list l)
 	__add_page_to_lru_list(zone, page, l, &zone->lru[l].list);
 }
 
-extern int my_variable;
-
 static inline void
 del_page_from_lru_list(struct zone *zone, struct page *page, enum lru_list l)
 {
-	
-	if (my_variable < 100) {
-		printk ("del_page_from_lru_list happens, my_variable is %d, lru_list is %d\n", my_variable, l);
-		my_variable++;
-	}
-	
 	list_del(&page->lru);
 	__mod_zone_page_state(zone, NR_LRU_BASE + l, -hpage_nr_pages(page));
 	mem_cgroup_del_lru_list(page, l);

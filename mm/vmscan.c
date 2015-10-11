@@ -1668,6 +1668,8 @@ static void move_active_pages_to_lru(struct zone *zone,
 		__count_vm_events(PGDEACTIVATE, pgmoved);
 }
 
+extern int my_variable;
+
 static void shrink_active_list(unsigned long nr_pages, struct zone *zone,
 			struct scan_control *sc, int priority, int file)
 {
@@ -1683,6 +1685,8 @@ static void shrink_active_list(unsigned long nr_pages, struct zone *zone,
 	isolate_mode_t reclaim_mode = ISOLATE_ACTIVE;
 
 	lru_add_drain();
+
+	printk("inside shrink_active_list: my_variable = %d\n", my_variable);
 
 	if (!sc->may_unmap)
 		reclaim_mode |= ISOLATE_UNMAPPED;
@@ -1718,6 +1722,11 @@ static void shrink_active_list(unsigned long nr_pages, struct zone *zone,
 	spin_unlock_irq(&zone->lru_lock);
 
 	while (!list_empty(&l_hold)) {
+		if(my_variable % 2333 == 0) {
+                        printk("inside while loop of shrink_active_list: my_variable = %d\n", my_variable);
+                }
+		
+
 		cond_resched();
 		page = lru_to_page(&l_hold);
 		list_del(&page->lru);
@@ -1728,6 +1737,10 @@ static void shrink_active_list(unsigned long nr_pages, struct zone *zone,
 		}
 
 		if (page_referenced(page, 0, sc->mem_cgroup, &vm_flags)) {
+			//if(my_variable % 2333 == 0) {
+			printk("second chance in shrink_active_list: my_variable = %d\n", my_variable);
+			//}
+
 			nr_rotated += hpage_nr_pages(page);
 			/*
 			 * Identify referenced, file-backed active pages and
@@ -2294,6 +2307,8 @@ static unsigned long do_try_to_free_pages(struct zonelist *zonelist,
 	struct zone *zone;
 	unsigned long writeback_threshold;
 	bool aborted_reclaim;
+
+	printk("inside do_try_to_free_pages %d\n", my_variable);
 
 	delayacct_freepages_start();
 
