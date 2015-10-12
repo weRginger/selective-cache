@@ -1686,7 +1686,7 @@ static void shrink_active_list(unsigned long nr_pages, struct zone *zone,
 
 	lru_add_drain();
 
-	printk("inside shrink_active_list: my_variable = %d\n", my_variable);
+	//printk("inside shrink_active_list: my_variable = %d\n", my_variable);
 
 	if (!sc->may_unmap)
 		reclaim_mode |= ISOLATE_UNMAPPED;
@@ -1722,14 +1722,16 @@ static void shrink_active_list(unsigned long nr_pages, struct zone *zone,
 	spin_unlock_irq(&zone->lru_lock);
 
 	while (!list_empty(&l_hold)) {
-		if(my_variable % 2333 == 0) {
-                        printk("inside while loop of shrink_active_list: my_variable = %d\n", my_variable);
-                }
-		
-
 		cond_resched();
 		page = lru_to_page(&l_hold);
 		list_del(&page->lru);
+                
+		if(my_variable % 233 == 0) { 
+                        printk("inside while loop of shrink_active_list: my_variable = %d\n", my_variable);
+			printk("test_bit(PG_dirty, &page->flags) is %d\n", test_bit(PG_dirty, &page->flags));
+			printk("test_bit(PG_referenced, &page->flags) is %d\n", test_bit(PG_referenced, &page->flags));
+                }
+
 
 		if (unlikely(!page_evictable(page, NULL))) {
 			putback_lru_page(page);
@@ -1738,7 +1740,7 @@ static void shrink_active_list(unsigned long nr_pages, struct zone *zone,
 
 		if (page_referenced(page, 0, sc->mem_cgroup, &vm_flags)) {
 			//if(my_variable % 2333 == 0) {
-			printk("second chance in shrink_active_list: my_variable = %d\n", my_variable);
+			//printk("second chance in shrink_active_list: my_variable = %d\n", my_variable);
 			//}
 
 			nr_rotated += hpage_nr_pages(page);
@@ -2308,7 +2310,7 @@ static unsigned long do_try_to_free_pages(struct zonelist *zonelist,
 	unsigned long writeback_threshold;
 	bool aborted_reclaim;
 
-	printk("inside do_try_to_free_pages %d\n", my_variable);
+	//printk("inside do_try_to_free_pages %d\n", my_variable);
 
 	delayacct_freepages_start();
 
