@@ -400,7 +400,9 @@ static int ext2_alloc_blocks(struct inode *inode,
 	int index = 0;
 	ext2_fsblk_t current_block = 0;
 	int ret = 0;
-
+	
+	printk("ext2_alloc_blocks\n");
+	
 	/*
 	 * Here we try to allocate the requested multiple blocks at once,
 	 * on a best-effort basis.
