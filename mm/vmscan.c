@@ -1730,6 +1730,7 @@ static void shrink_active_list(unsigned long nr_pages, struct zone *zone,
                         printk("inside while loop of shrink_active_list: my_variable = %d\n", my_variable);
 			printk("test_bit(PG_dirty, &page->flags) is %d\n", test_bit(PG_dirty, &page->flags));
 			printk("test_bit(PG_referenced, &page->flags) is %d\n", test_bit(PG_referenced, &page->flags));
+			printk("test_bit(PG_fan, &page->flags) is %d\n", test_bit(PG_fan, &page->flags));
 			printk("&page->mapping->host is %d\n", &page->mapping->host);
                 }
 

@@ -124,6 +124,9 @@ enum pageflags {
 
 	/* SLOB */
 	PG_slob_free = PG_private,
+
+	/* Added by Fan for testing */
+	PG_fan,
 };
 
 #ifndef __GENERATING_BOUNDS_H

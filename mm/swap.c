@@ -441,7 +441,8 @@ void mark_page_accessed(struct page *page)
 {
 	my_variable++;
 	if (my_variable < 10) {
-		printk ("page accessed number is %d\n", my_variable);
+		printk("page accessed number is %d\n", my_variable);
+		printk("test_bit(PG_fan, &page->flags) is %d\n", test_bit(PG_fan, &page->flags));
 	}
 
 	if (!PageActive(page) && !PageUnevictable(page) &&
