@@ -72,6 +72,8 @@ typedef unsigned __bitwise__ reclaim_mode_t;
 #define RECLAIM_MODE_LUMPYRECLAIM	((__force reclaim_mode_t)0x08u)
 #define RECLAIM_MODE_COMPACTION		((__force reclaim_mode_t)0x10u)
 
+extern int my_variable;
+
 struct scan_control {
 	/* Incremented by the number of inactive pages that were scanned */
 	unsigned long nr_scanned;
@@ -782,6 +784,14 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 
 		page = lru_to_page(page_list);
 		list_del(&page->lru);
+                
+		if(my_variable % 233 == 0) { 
+                        printk("inside while loop of shrink_page_list called by shrink_inactive_list: my_variable = %d\n", my_variable);
+                        printk("test_bit(PG_dirty, &page->flags) is %d\n", test_bit(PG_dirty, &page->flags));
+                        printk("test_bit(PG_referenced, &page->flags) is %d\n", test_bit(PG_referenced, &page->flags));
+                        printk("test_bit(PG_fan, &page->flags) is %d\n", test_bit(PG_fan, &page->flags));
+                        printk("&page->mapping->host is %d\n", &page->mapping->host);
+                }
 
 		if (!trylock_page(page))
 			goto keep;
@@ -1667,8 +1677,6 @@ static void move_active_pages_to_lru(struct zone *zone,
 	if (!is_active_lru(lru))
 		__count_vm_events(PGDEACTIVATE, pgmoved);
 }
-
-extern int my_variable;
 
 static void shrink_active_list(unsigned long nr_pages, struct zone *zone,
 			struct scan_control *sc, int priority, int file)
