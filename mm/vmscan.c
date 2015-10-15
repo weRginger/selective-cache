@@ -773,6 +773,8 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 	unsigned long nr_writeback = 0;
 
 	cond_resched();
+	
+	printk("at begining of shrink_page_list called by shrink_inactive_list: my_variable = %d\n", my_variable);
 
 	while (!list_empty(page_list)) {
 		enum page_references references;
@@ -785,7 +787,7 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 		page = lru_to_page(page_list);
 		list_del(&page->lru);
                 
-		if(my_variable % 233 == 0) { 
+		if(my_variable % 2 == 0) { 
                         printk("inside while loop of shrink_page_list called by shrink_inactive_list: my_variable = %d\n", my_variable);
                         printk("test_bit(PG_dirty, &page->flags) is %d\n", test_bit(PG_dirty, &page->flags));
                         printk("test_bit(PG_referenced, &page->flags) is %d\n", test_bit(PG_referenced, &page->flags));
