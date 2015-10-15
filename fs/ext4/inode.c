@@ -2498,6 +2498,7 @@ retry:
 
 	if(my_variable_local % 6666 == 0) {
 		printk("Line %d: inside ext4_da_write_begin, local my_variable is %d\n", __LINE__, my_variable_local);
+		printk("test_bit(PG_dirty, &page->flags) %d\n", test_bit(PG_dirty, &page->flags));
        		printk("before set_bit %d\n", test_bit(PG_fan, &page->flags));
         	set_bit(PG_fan, &page->flags);
 	        printk("after set_bit %d\n", test_bit(PG_fan, &page->flags));

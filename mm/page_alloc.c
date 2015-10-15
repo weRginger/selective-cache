@@ -568,6 +568,7 @@ static inline void free_page_mlock(struct page *page)
 static inline int free_pages_check(struct page *page)
 {
 	if(test_bit(PG_fan, &page->flags) == 1) {
+		printk("test_bit(PG_dirty, &page->flags) %d\n", test_bit(PG_dirty, &page->flags));
 		printk("inside free_page_check test_bit(PG_fan, &page->flags) is %d\n", test_bit(PG_fan, &page->flags));
 	}
 
@@ -576,7 +577,7 @@ static inline int free_pages_check(struct page *page)
 		(atomic_read(&page->_count) != 0) |
 		(page->flags & PAGE_FLAGS_CHECK_AT_FREE) |
 		(mem_cgroup_bad_page_check(page)))) {
-
+		printk("test_bit(PG_dirty, &page->flags) %d\n", test_bit(PG_dirty, &page->flags));
 		printk("inside free_pages_check: %d, %d, %d, %d, %d\n", (page_mapcount(page)), (page->mapping != NULL), (atomic_read(&page->_count) != 0), (page->flags & PAGE_FLAGS_CHECK_AT_FREE), (mem_cgroup_bad_page_check(page)) );		
 
 		bad_page(page);
