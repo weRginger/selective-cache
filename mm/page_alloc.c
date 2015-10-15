@@ -567,8 +567,9 @@ static inline void free_page_mlock(struct page *page)
 
 static inline int free_pages_check(struct page *page)
 {
-
-	printk("inside free_page_check test_bit(PG_fan, &page->flags) is %d\n", test_bit(PG_fan, &page->flags));
+	if(test_bit(PG_fan, &page->flags) == 1) {
+		printk("inside free_page_check test_bit(PG_fan, &page->flags) is %d\n", test_bit(PG_fan, &page->flags));
+	}
 
 	if (unlikely(page_mapcount(page) |
 		(page->mapping != NULL)  |
