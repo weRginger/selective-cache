@@ -1963,8 +1963,6 @@ static int __block_commit_write(struct inode *inode, struct page *page,
  * The filesystem needs to handle block truncation upon failure.
  */
 
-extern int my_variable;
-
 int block_write_begin(struct address_space *mapping, loff_t pos, unsigned len,
 		unsigned flags, struct page **pagep, get_block_t *get_block)
 {
@@ -1975,8 +1973,6 @@ int block_write_begin(struct address_space *mapping, loff_t pos, unsigned len,
 	page = grab_cache_page_write_begin(mapping, index, flags);
 	if (!page)
 		return -ENOMEM;
-	
-	printk("Test: block_write_begin, my_variable %d\n", my_variable);
 
 	status = __block_write_begin(page, pos, len, get_block);
 	if (unlikely(status)) {

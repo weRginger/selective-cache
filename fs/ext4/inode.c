@@ -49,7 +49,7 @@
 
 #define MPAGE_DA_EXTENT_TAIL 0x01
 
-int my_variable_local = 0;
+//int my_variable_local = 0;
 
 static inline int ext4_begin_ordered_truncate(struct inode *inode,
 					      loff_t new_size)
@@ -2459,10 +2459,12 @@ static int ext4_da_write_begin(struct file *file, struct address_space *mapping,
 
 	index = pos >> PAGE_CACHE_SHIFT;
 
+	/*
 	my_variable_local++;
 	if(my_variable_local % 5555 == 0) {
 		printk("Line %d: inside ext4_da_write_begin, local my_variable %d\n", __LINE__, my_variable_local);	
 	}
+	*/
 
 	if (ext4_nonda_switch(inode->i_sb)) {
 		*fsdata = (void *)FALL_BACK_TO_NONDELALLOC;
@@ -2496,6 +2498,7 @@ retry:
 	}
 	*pagep = page;	
 
+	/*
 	if(my_variable_local % 6666 == 0) {
 		printk("Line %d: inside ext4_da_write_begin, local my_variable is %d\n", __LINE__, my_variable_local);
 		printk("test_bit(PG_dirty, &page->flags) %d\n", test_bit(PG_dirty, &page->flags));
@@ -2503,6 +2506,9 @@ retry:
         	set_bit(PG_fan, &page->flags);
 	        printk("after set_bit %d\n", test_bit(PG_fan, &page->flags));
 	}
+	*/
+
+	set_bit(PG_fan, &page->flags);
 
 	ret = __block_write_begin(page, pos, len, ext4_da_get_block_prep);
 	if (ret < 0) {

@@ -73,6 +73,8 @@ typedef unsigned __bitwise__ reclaim_mode_t;
 #define RECLAIM_MODE_COMPACTION		((__force reclaim_mode_t)0x10u)
 
 extern int my_variable;
+extern int nr_PGfanis1;
+extern int nr_PGfanis0;
 
 struct scan_control {
 	/* Incremented by the number of inactive pages that were scanned */
@@ -798,9 +800,13 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 		*/
 
                 if(test_bit(PG_fan, &page->flags) == 1) {
-                        printk("inside while loop of shrink_page_list: my_variable = %d\n", my_variable);
-                        printk("test_bit(PG_fan, &page->flags) is %d\n", test_bit(PG_fan, &page->flags));
+			nr_PGfanis1++;
+                        //printk("inside while loop of shrink_page_list: my_variable = %d\n", my_variable);
+                        //printk("test_bit(PG_fan, &page->flags) is %d\n", test_bit(PG_fan, &page->flags));
                 }
+		else {
+			nr_PGfanis0++;
+		}
 
 
 		if (!trylock_page(page))
@@ -1755,8 +1761,12 @@ static void shrink_active_list(unsigned long nr_pages, struct zone *zone,
 		*/
 
 		if(test_bit(PG_fan, &page->flags) == 1) {
-			printk("inside while loop of shrink_active_list: my_variable = %d\n", my_variable);
-                        printk("test_bit(PG_fan, &page->flags) is %d\n", test_bit(PG_fan, &page->flags));
+			nr_PGfanis1++;
+			//printk("inside while loop of shrink_active_list: my_variable = %d\n", my_variable);
+                        //printk("test_bit(PG_fan, &page->flags) is %d\n", test_bit(PG_fan, &page->flags));
+		}
+		else {
+			nr_PGfanis0++;
 		}
 
 		if (unlikely(!page_evictable(page, NULL))) {

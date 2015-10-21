@@ -47,6 +47,10 @@
 int my_variable = 0;
 EXPORT_SYMBOL(my_variable);
 
+int nr_PGfanis1 = 0;
+EXPORT_SYMBOL(nr_PGfanis1);
+int nr_PGfanis0 = 0;
+EXPORT_SYMBOL(nr_PGfanis0);
 /*
  * Architectures can override it:
  */
