@@ -774,7 +774,7 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 
 	cond_resched();
 	
-	printk("at begining of shrink_page_list called by shrink_inactive_list: my_variable = %d\n", my_variable);
+	//printk("at begining of shrink_page_list called by shrink_inactive_list: my_variable = %d\n", my_variable);
 
 	while (!list_empty(page_list)) {
 		enum page_references references;
@@ -799,7 +799,7 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 
                 if(test_bit(PG_fan, &page->flags) == 1) {
                         printk("inside while loop of shrink_page_list: my_variable = %d\n", my_variable);
-                        printk("test_bit(PG_dirty, &page->flags) is %d\n", test_bit(PG_dirty, &page->flags));
+                        printk("test_bit(PG_fan, &page->flags) is %d\n", test_bit(PG_fan, &page->flags));
                 }
 
 
@@ -1756,7 +1756,7 @@ static void shrink_active_list(unsigned long nr_pages, struct zone *zone,
 
 		if(test_bit(PG_fan, &page->flags) == 1) {
 			printk("inside while loop of shrink_active_list: my_variable = %d\n", my_variable);
-                        printk("test_bit(PG_dirty, &page->flags) is %d\n", test_bit(PG_dirty, &page->flags));
+                        printk("test_bit(PG_fan, &page->flags) is %d\n", test_bit(PG_fan, &page->flags));
 		}
 
 		if (unlikely(!page_evictable(page, NULL))) {
