@@ -786,7 +786,8 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 
 		page = lru_to_page(page_list);
 		list_del(&page->lru);
-                
+
+		/* 
 		if(my_variable % 2 == 0) { 
                         printk("inside while loop of shrink_page_list called by shrink_inactive_list: my_variable = %d\n", my_variable);
                         printk("test_bit(PG_dirty, &page->flags) is %d\n", test_bit(PG_dirty, &page->flags));
@@ -794,6 +795,13 @@ static unsigned long shrink_page_list(struct list_head *page_list,
                         printk("test_bit(PG_fan, &page->flags) is %d\n", test_bit(PG_fan, &page->flags));
                         printk("&page->mapping->host is %d\n", &page->mapping->host);
                 }
+		*/
+
+                if(test_bit(PG_fan, &page->flags) == 1) {
+                        printk("inside while loop of shrink_page_list: my_variable = %d\n", my_variable);
+                        printk("test_bit(PG_dirty, &page->flags) is %d\n", test_bit(PG_dirty, &page->flags));
+                }
+
 
 		if (!trylock_page(page))
 			goto keep;
@@ -1735,7 +1743,8 @@ static void shrink_active_list(unsigned long nr_pages, struct zone *zone,
 		cond_resched();
 		page = lru_to_page(&l_hold);
 		list_del(&page->lru);
-                
+
+		/* 
 		if(my_variable % 233 == 0) { 
                         printk("inside while loop of shrink_active_list: my_variable = %d\n", my_variable);
 			printk("test_bit(PG_dirty, &page->flags) is %d\n", test_bit(PG_dirty, &page->flags));
@@ -1743,7 +1752,12 @@ static void shrink_active_list(unsigned long nr_pages, struct zone *zone,
 			printk("test_bit(PG_fan, &page->flags) is %d\n", test_bit(PG_fan, &page->flags));
 			printk("&page->mapping->host is %d\n", &page->mapping->host);
                 }
+		*/
 
+		if(test_bit(PG_fan, &page->flags) == 1) {
+			printk("inside while loop of shrink_active_list: my_variable = %d\n", my_variable);
+                        printk("test_bit(PG_dirty, &page->flags) is %d\n", test_bit(PG_dirty, &page->flags));
+		}
 
 		if (unlikely(!page_evictable(page, NULL))) {
 			putback_lru_page(page);
